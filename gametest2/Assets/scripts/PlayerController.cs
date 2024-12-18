@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		// If the player should jump
-		if (_Grounded && jump && _Animator.GetBool("Ground"))
+		if (jump)// && _Animator.GetBool("Ground"))
 		{
 			// Adds vertical force to player
 			_Grounded = false;

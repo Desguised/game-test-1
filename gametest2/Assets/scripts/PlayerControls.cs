@@ -23,7 +23,6 @@ public class PlayerControls : MonoBehaviour
 	private bool _Jump;							//	Lets us know if we are jumping
 	private Color _TempColor;					//	Stores temporary color
 	private AudioSource _AudioSource;			//	Reference to Audio Source
-	private ParticleSystem _ParticleSystem;		//	Reference to Particle System
 	private Player _Player;						//	Reference to player
 
 	/*--------------------------------------------------------------------------------------*/
@@ -34,8 +33,7 @@ public class PlayerControls : MonoBehaviour
 	private void Start()
 	{		
 		_Player = GetComponent<Player> ();
-		_ParticleSystem = GetComponent<ParticleSystem> ();
-		_ParticleSystem.GetComponent<Renderer>().sortingLayerName = "Particles";
+
 		_AudioSource = GetComponent<AudioSource> ();
 	}
 
@@ -48,6 +46,7 @@ public class PlayerControls : MonoBehaviour
 	{
 		// Read the inputs
 		float h = Input.GetAxis ("Horizontal");
+		// Pass all parameters to the Player class
 		// Pass all parameters to the Player class
 		PlayerController.INSTANCE.Move(h, _Jump);
 		_Jump = false;
@@ -64,7 +63,7 @@ public class PlayerControls : MonoBehaviour
 			if (!_Jump)
 			{
 				// Read the jump input in Update so button presses aren't missed
-				_Jump = Input.GetKeyDown (KeyCode.Space);
+				_Jump = Input.GetKeyDown (KeyCode.W);
 			}
 
 			if (PlayerController.INSTANCE.isGrounded ())
