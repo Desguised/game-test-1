@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         {
 
         }
-        else if (Mathf.Abs(rb.velocity.x) > 2f)
+        else if (Mathf.Abs(rb.linearVelocity.x) > 2f)
         {
             state = State.Run;
         }
