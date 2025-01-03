@@ -280,8 +280,8 @@ GameObject:
   m_Component:
   - component: {fileID: 576374075}
   - component: {fileID: 576374074}
-  m_Layer: 0
-  m_Name: Grid
+  m_Layer: 6
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,6 +416,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9023fdbf3c435624c92261c8f62be4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Ground:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &864732147 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1651469387407286245, guid: 9ada6e5dd9c565d4aa31d96d10bfb4a1, type: 3}
@@ -522,8 +525,8 @@ GameObject:
   - component: {fileID: 1307094151}
   - component: {fileID: 1307094153}
   - component: {fileID: 1307094152}
-  m_Layer: 0
-  m_Name: Tilemap
+  m_Layer: 6
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
