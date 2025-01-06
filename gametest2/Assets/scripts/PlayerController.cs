@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (hDirection > 0)
         {
-            rb.linearVelocity = new Vector2(5, 0);
+            rb.linearVelocity = new Vector2(5, rb.linearVelocityY);
             transform.localScale = new Vector2(1, 1);
             
         }
@@ -36,16 +36,16 @@ public class PlayerMovement : MonoBehaviour
             
         {
 
-            rb.linearVelocity = new Vector2(-5, 0);
+            rb.linearVelocity = new Vector2(-5, rb.linearVelocityY);
             transform.localScale = new Vector2(-1, 1);
             
-        }
-        
-
+        }  
         else
         {
             
         }
+
+
         if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(Ground))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10f);
@@ -53,14 +53,25 @@ public class PlayerMovement : MonoBehaviour
         }
         VelocityState();
         anim.SetInteger("State", (int)state);
+        anim.SetBool("grounded", coll.IsTouchingLayers(Ground));
     }
     private void VelocityState()
     {
         if(state == State.jump)
         {
-          if(rb.angularVelocity.y < .1f)
+            if (rb.linearVelocity.y < .1f && !coll.IsTouchingLayers(Ground))
             {
                 state = State.falling;
+            }
+            else if (state == State.falling)
+            {
+                rb.AddForceY(-1);
+
+                if (coll.IsTouchingLayers(Ground))
+                {
+
+                    state = State.idle;
+                }
             }
         }
         else if (Mathf.Abs(rb.linearVelocity.x) > 2f)
