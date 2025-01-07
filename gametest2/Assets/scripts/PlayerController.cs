@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private State state = State.idle;
     private Collider2D coll;
     [SerializeField] private LayerMask Ground;
+    [SerializeField] private float speed =5f;
+    [SerializeField] private float jumpforce = 10f;
 
 
     //start is called before the first frame update
@@ -28,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (hDirection > 0)
         {
-            rb.linearVelocity = new Vector2(5, rb.linearVelocityY);
+            rb.linearVelocity = new Vector2(speed,rb.linearVelocityY);
             transform.localScale = new Vector2(1, 1);
             
         }
@@ -36,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
             
         {
 
-            rb.linearVelocity = new Vector2(-5, rb.linearVelocityY);
+            rb.linearVelocity = new Vector2(-speed,rb.linearVelocityY);
             transform.localScale = new Vector2(-1, 1);
             
         }  
@@ -48,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(Ground))
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);
             state = State.jump;
         }
         VelocityState();
