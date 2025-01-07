@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +14,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask Ground;
     [SerializeField] private float speed =5f;
     [SerializeField] private float jumpforce = 10f;
+    [SerializeField] private int Coins = 0;
+    [SerializeField] private Text CoinsText;
+    
+
+
+    public int coin = 0;
 
 
     //start is called before the first frame update
@@ -56,6 +63,16 @@ public class PlayerMovement : MonoBehaviour
         VelocityState();
         anim.SetInteger("State", (int)state);
         anim.SetBool("grounded", coll.IsTouchingLayers(Ground));
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Collectable")
+        {
+            Destroy(collision.gameObject);
+            coin += 1;
+            CoinsText.text = coin + "";
+        }
     }
     private void VelocityState()
     {
