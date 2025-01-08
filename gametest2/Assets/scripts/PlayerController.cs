@@ -74,6 +74,14 @@ public class PlayerMovement : MonoBehaviour
             CoinsText.text = coin + "";
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Enemy" && state == State.falling)
+        {
+            Destroy(other.gameObject);
+        }
+    }
     private void VelocityState()
     {
         if(state == State.jump)
