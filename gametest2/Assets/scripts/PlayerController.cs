@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpforce = 10f;
     [SerializeField] private int Coins = 0;
     [SerializeField] private Text CoinsText;
-    
+    [SerializeField] private float hurtForce = 10f;
 
 
     public int coin = 0;
@@ -33,33 +33,8 @@ public class PlayerMovement : MonoBehaviour
     //update is called once per frame
     void Update()
     {
-        float hDirection = Input.GetAxis("Horizontal");
+        Movement();
 
-        if (hDirection > 0)
-        {
-            rb.linearVelocity = new Vector2(speed,rb.linearVelocityY);
-            transform.localScale = new Vector2(1, 1);
-            
-        }
-        else if (hDirection < 0)
-            
-        {
-
-            rb.linearVelocity = new Vector2(-speed,rb.linearVelocityY);
-            transform.localScale = new Vector2(-1, 1);
-            
-        }  
-        else
-        {
-            
-        }
-
-
-        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(Ground))
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);
-            state = State.jump;
-        }
         VelocityState();
         anim.SetInteger("State", (int)state);
         anim.SetBool("grounded", coll.IsTouchingLayers(Ground));
@@ -77,13 +52,52 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag == "Enemy" && state == State.falling)
+        if (other.gameObject.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+
+
+            if (state == State.falling)
+            {
+                Destroy(other.gameObject);
+            }
+            else
+            {
+
+                if(other.gameObject.transform.position.x > transform.position.x)
+                {
+                    //enemy is to right
+                    rb.angularVelocity = new Vector2(-hurtForce, rb.angularVelocity.Y);
+
+                }
+                else
+                {
+                    //enemy is to left
+                    rb.angularVelocity = new Vector2(hurtForce, rb.angularVelocity.Y);
+                }
+
+
+
+
+            }
+            
         }
+
+
+
+
+
+
+
+
+
+
     }
     private void VelocityState()
     {
+        if (state == State.falling && !coll.IsTouchingLayers(Ground))
+            return;
+
+
         if(state == State.jump)
         {
             if (rb.linearVelocity.y < .1f && !coll.IsTouchingLayers(Ground))
@@ -101,6 +115,12 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        else if (rb.linearVelocity.y < .1f && !coll.IsTouchingLayers(Ground))
+        {
+            state = State.falling;
+
+            rb.AddForceY(-1);
+        }
         else if (Mathf.Abs(rb.linearVelocity.x) > 2f)
         {
             state = State.Run;
@@ -110,5 +130,36 @@ public class PlayerMovement : MonoBehaviour
             state = State.idle;
         }
     }
-    
+    private void Movement()
+    {
+        float hDirection = Input.GetAxis("Horizontal");
+
+        if (hDirection > 0)
+        {
+            rb.linearVelocity = new Vector2(speed, rb.linearVelocityY);
+            transform.localScale = new Vector2(1, 1);
+
+        }
+        else if (hDirection < 0)
+
+        {
+
+            rb.linearVelocity = new Vector2(-speed, rb.linearVelocityY);
+            transform.localScale = new Vector2(-1, 1);
+
+        }
+        else
+        {
+
+        }
+
+
+        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(Ground))
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);
+            state = State.jump;
+        }
+
+
+    }
 }
