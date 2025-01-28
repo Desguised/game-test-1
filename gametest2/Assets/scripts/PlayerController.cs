@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
 
     private Animator anim;
-    private enum State {idle, Run, jump, falling};
+    private enum State {idle, Run, jump, falling, hurt};
     private State state = State.idle;
     private Collider2D coll;
     [SerializeField] private LayerMask Ground;
@@ -33,7 +33,11 @@ public class PlayerMovement : MonoBehaviour
     //update is called once per frame
     void Update()
     {
-        Movement();
+        if (state != State.hurt)
+        {
+            Movement();
+        }
+        
 
         VelocityState();
         anim.SetInteger("State", (int)state);
@@ -62,17 +66,17 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-
+                state = State.hurt;
                 if(other.gameObject.transform.position.x > transform.position.x)
                 {
+                    rb.linearVelocity = new Vector2(-hurtForce,rb.linearVelocity.y);
                     //enemy is to right
-                    rb.angularVelocity = new Vector2(-hurtForce, rb.angularVelocity.Y);
 
                 }
                 else
                 {
                     //enemy is to left
-                    rb.angularVelocity = new Vector2(hurtForce, rb.angularVelocity.Y);
+                    rb.linearVelocity = new Vector2(hurtForce,rb.linearVelocity.y);
                 }
 
 
