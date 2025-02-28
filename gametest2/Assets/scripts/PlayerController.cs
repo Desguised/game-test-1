@@ -2,6 +2,8 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int Coins = 0;
     [SerializeField] private Text CoinsText;
     [SerializeField] private float hurtForce = 10f;
-
+    [SerializeField] private int health;
+    [SerializeField] private TextMeshProUGUI healthAmount;
 
     public int coin = 0;
 
@@ -28,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
+        healthAmount.text = health.ToString();
     }
 
     //update is called once per frame
@@ -67,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 state = State.hurt;
+                HandleHealth();
                 if(other.gameObject.transform.position.x > transform.position.x)
                 {
                     rb.linearVelocity = new Vector2(-hurtForce,rb.linearVelocity.y);
@@ -86,15 +91,15 @@ public class PlayerMovement : MonoBehaviour
             
         }
 
-
-
-
-
-
-
-
-
-
+    }
+    private void HandleHealth()
+    {
+        health -= 1;
+        healthAmount.text = health.ToString();
+        if(health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
     private void VelocityState()
     {

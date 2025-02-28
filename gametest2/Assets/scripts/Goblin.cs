@@ -21,6 +21,7 @@ public class Goblin : MonoBehaviour
 
     private void Update()
     {
+
         if (facingLeft)
         {
             if (transform.position.x > leftcap)
@@ -34,24 +35,12 @@ public class Goblin : MonoBehaviour
                 {
                     rb.linearVelocity = new Vector2(-jumpLength, jumpHeight);
                 }
-
-
-
-
-
             }
             else
-            {
-          
+            {          
                 facingLeft = false;
-
             }
         
-
-
-
-
-
         }
         else
         {
@@ -67,14 +56,9 @@ public class Goblin : MonoBehaviour
                     rb.linearVelocity = new Vector2(jumpLength, jumpHeight);
                 }
 
-
-
-
-
             }
             else
             {
-
                 facingLeft = true;
 
             }
