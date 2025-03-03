@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -55,6 +56,13 @@ public class PlayerMovement : MonoBehaviour
             Destroy(collision.gameObject);
             coin += 1;
             CoinsText.text = coin + "";
+        }
+        if(collision.tag == "Powerup")
+        {
+            Destroy(collision.gameObject);
+            jumpforce = 16f;
+            GetComponent<SpriteRenderer>().color = Color.cyan;
+            StartCoroutine(ResetPower());
         }
     }
 
@@ -171,4 +179,12 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+    private IEnumerator ResetPower()
+    {
+        yield return new WaitForSeconds(5);
+        jumpforce = 8;
+        GetComponent<SpriteRenderer>().color = Color.white;
+    
+    }
+
 }
