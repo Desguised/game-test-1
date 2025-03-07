@@ -38,4 +38,68 @@ public class BGloop : MonoBehaviour
 
 
     }
+
+    void repositionChildObjects(GameObject obj)
+    {
+        Transform[] children = obj.GetComponentsInChildren<Transform>();
+        if (children.Length > 1)
+        {
+            GameObject firstChild = children[1].gameObject;
+            GameObject lastChild = children[children.Length - 1].gameObject;
+            float halfObjectWidth = lastChild.GetComponent<SpriteRenderer>().bounds.extents.x; // - choke;
+            if (transform.position.x -screenbounds.x > lastChild.transform.position.x - halfObjectWidth)
+            {
+                firstChild.transform.SetAsLastSibling();
+                firstChild.transform.position = new Vector3(lastChild.transform.position.x + halfObjectWidth * 2, lastChild.transform.position.y, lastChild.transform.position.z);
+            }
+            else if (transform.position.x - screenbounds.x < firstChild.transform.position.x - halfObjectWidth)
+            {
+                lastChild.transform.SetAsLastSibling();
+                lastChild.transform.position = new Vector3(firstChild.transform.position.x - halfObjectWidth * 2, firstChild.transform.position.y, firstChild.transform.position.z);
+            }
+        }
+    }
+
+    void Update()
+    {
+        Vector3 velocity = Vector3.zero;
+        Vector3 desiredPosition = transform.position + new Vector3(scrollSpeed, 0, 0);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void LateUpdate()
+    {
+        foreach (GameObject obj in levels)
+        {
+            repositionChildObjects(obj);
+        }
+    }
+
+
+
+
+
+
 }
+
+
