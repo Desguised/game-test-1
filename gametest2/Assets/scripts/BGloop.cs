@@ -5,6 +5,8 @@ public class BGloop : MonoBehaviour
     public GameObject[] levels;
     private Camera mainCamera;
     private Vector2 screenbounds;
+    public float scrollSpeed;
+    public float choke;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,7 +26,7 @@ public class BGloop : MonoBehaviour
     
     void loadChildObjects(GameObject obj)
     {
-        float objectwith = obj.GetComponent<SpriteRenderer>().bounds.size.x;
+        float objectwith = obj.GetComponent<SpriteRenderer>().bounds.size.x - choke;
         int childsNeeded = (int)Mathf.Ceil(screenbounds.x * 2 / objectwith);
         GameObject clone = Instantiate(obj) as GameObject;
         for (int i = 0; i <= childsNeeded; i++)
@@ -46,7 +48,7 @@ public class BGloop : MonoBehaviour
         {
             GameObject firstChild = children[1].gameObject;
             GameObject lastChild = children[children.Length - 1].gameObject;
-            float halfObjectWidth = lastChild.GetComponent<SpriteRenderer>().bounds.extents.x; // - choke;
+            float halfObjectWidth = lastChild.GetComponent<SpriteRenderer>().bounds.extents.x - choke;
             if (transform.position.x -screenbounds.x > lastChild.transform.position.x - halfObjectWidth)
             {
                 firstChild.transform.SetAsLastSibling();
@@ -64,6 +66,8 @@ public class BGloop : MonoBehaviour
     {
         Vector3 velocity = Vector3.zero;
         Vector3 desiredPosition = transform.position + new Vector3(scrollSpeed, 0, 0);
+        Vector3 smoothPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, 0.3f);
+        transform.position = smoothPosition;
     }
 
 
