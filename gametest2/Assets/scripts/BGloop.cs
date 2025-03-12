@@ -33,7 +33,7 @@ public class BGloop : MonoBehaviour
         {
             GameObject c = Instantiate(clone) as GameObject;
             c.transform.SetParent(obj.transform);
-            c.transform.position = new Vector3(objectwith * i, obj.transform.position.y, obj.transform.position.z);
+            c.transform.position = new Vector3((objectwith * i)-8.5f, obj.transform.position.y, obj.transform.position.z);
         }
         Destroy(clone);
         Destroy(obj.GetComponent<SpriteRenderer>());
@@ -69,27 +69,6 @@ public class BGloop : MonoBehaviour
         Vector3 smoothPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, 0.3f);
         transform.position = smoothPosition;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private void LateUpdate()
     {
