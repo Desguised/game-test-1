@@ -11,11 +11,12 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
 
     private Animator anim;
-    private enum State {idle, Run, jump, falling, hurt};
+    private enum State { idle, Run, jump, falling, hurt };
     private State state = State.idle;
     private Collider2D coll;
+    private AudioSource footstep;
     [SerializeField] private LayerMask Ground;
-    [SerializeField] private float speed =5f;
+    [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpforce = 10f;
     [SerializeField] private int Coins = 0;
     [SerializeField] private Text CoinsText;
@@ -33,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
         healthAmount.text = health.ToString();
+        footstep = GetComponent<AudioSource>();
     }
 
     //update is called once per frame
@@ -42,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Movement();
         }
-        
+
 
         VelocityState();
         anim.SetInteger("State", (int)state);
@@ -57,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
             coin += 1;
             CoinsText.text = coin + "";
         }
-        if(collision.tag == "Powerup")
+        if (collision.tag == "Powerup")
         {
             Destroy(collision.gameObject);
             jumpforce = 16f;
@@ -80,23 +82,23 @@ public class PlayerMovement : MonoBehaviour
             {
                 state = State.hurt;
                 HandleHealth();
-                if(other.gameObject.transform.position.x > transform.position.x)
+                if (other.gameObject.transform.position.x > transform.position.x)
                 {
-                    rb.linearVelocity = new Vector2(-hurtForce,rb.linearVelocity.y);
+                    rb.linearVelocity = new Vector2(-hurtForce, rb.linearVelocity.y);
                     //enemy is to right
 
                 }
                 else
                 {
                     //enemy is to left
-                    rb.linearVelocity = new Vector2(hurtForce,rb.linearVelocity.y);
+                    rb.linearVelocity = new Vector2(hurtForce, rb.linearVelocity.y);
                 }
 
 
 
 
             }
-            
+
         }
 
     }
@@ -104,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
     {
         health -= 1;
         healthAmount.text = health.ToString();
-        if(health <= 0)
+        if (health <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -115,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
             return;
 
 
-        if(state == State.jump)
+        if (state == State.jump)
         {
             if (rb.linearVelocity.y < .1f && !coll.IsTouchingLayers(Ground))
             {
@@ -184,7 +186,11 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(5);
         jumpforce = 8;
         GetComponent<SpriteRenderer>().color = Color.white;
-    
+
     }
 
+    private void FootStep()
+    {
+        footstep.Play();
+    }
 }
