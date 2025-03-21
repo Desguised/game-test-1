@@ -6785,6 +6785,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7505850682000975790, guid: 299adf9286bce82458687a5b59392622, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7238169125576072023}
+    - targetCorrespondingSourceObject: {fileID: 7505850682000975790, guid: 299adf9286bce82458687a5b59392622, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7238169125576072030}
+    - targetCorrespondingSourceObject: {fileID: 7505850682000975790, guid: 299adf9286bce82458687a5b59392622, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7238169125576072029}
   m_SourcePrefab: {fileID: 100100000, guid: 299adf9286bce82458687a5b59392622, type: 3}
 --- !u!4 &7238169125576072017 stripped
 Transform:
@@ -6888,6 +6894,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7238169125576072029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150554381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 318299e51233aa2489ebb5e5141313f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grapplelength: 2
+  grappleLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!232 &7238169125576072030
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150554381}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 0
+  m_Distance: 7.3115387
+  m_MaxDistanceOnly: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
