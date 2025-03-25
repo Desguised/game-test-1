@@ -33,7 +33,11 @@ public class GrapplingHook : MonoBehaviour
                 joint.connectedAnchor = grapplePoint;
                 joint.enabled = true;
                 joint.distance = grapplelength;
-
+                Debug.Log("hit");
+            }
+            else
+            {
+                Debug.Log("miss");
             }
         }
 
